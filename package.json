@@ -27,7 +27,6 @@
     "babel-eslint": "^3.1.1",
     "babel-plugin-espower": "^0.3.0",
     "babelify": "^6.1.0",
-    "browser-sync": "^2.3.1",
     "browserify": "^9.0.3",
     "eslint": "^0.17.1",
     "karma": "^0.12.31",

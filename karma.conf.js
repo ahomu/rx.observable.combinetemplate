@@ -25,20 +25,8 @@ module.exports = function(config) {
 
     browsers : ['Chrome'],
 
-    customLaunchers : {
-      chromeTravisCI : {
-        base  : 'Chrome',
-        flags : ['--no-sandbox']
-      }
-    },
-
     autoWatch : true,
 
     reporters : ['dots']
   });
-
-  // Custom configuration for Travis-CI
-  if (process.env.TRAVIS) {
-    config.browsers = ['chromeTravisCI'];
-  }
 };
