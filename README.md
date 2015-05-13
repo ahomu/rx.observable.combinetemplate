@@ -1,5 +1,7 @@
 # Rx.Observable.combineTemplate
 
+[![npm version][npm-image]][npm-url] [![build status][circle-image]][circle-url] [![Dependency Status][deps-image]][deps-url]
+
 Generate values  based on the Observable and object template. Similar to `Bacon.combineTemplate` ([link](https://github.com/baconjs/bacon.js#observable-combine)).
 
 ## Usage
@@ -82,3 +84,12 @@ npm test
 ## License
 
 MIT
+
+https://circleci.com/gh/:owner/:repo.svg?style=shield&circle-token=:circle-token
+
+[npm-image]: https://img.shields.io/npm/v/rx.observable.combinetemplate.svg
+[npm-url]: https://npmjs.org/package/rx.observable.combinetemplate
+[circle-image]: https://circleci.com/gh/ahomu/rx.observable.combinetemplate.svg?style=shield&circle-token=b12ab2a48027a249724e0b1924ccec8152d3068a
+[circle-url]: https://circleci.com/gh/ahomu/rx.observable.combinetemplate
+[deps-image]: https://david-dm.org/ahomu/rx.observable.combinetemplate.svg
+[deps-url]: https://david-dm.org/ahomu/rx.observable.combinetemplate
