@@ -1,0 +1,42 @@
+{
+  "name": "rx.observable.combinetemplate",
+  "version": "0.1.0",
+  "description": "",
+  "author": "ahomu",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "npm run tdd",
+    "test": "karma start --singleRun",
+    "tdd": "karma start",
+    "lint": "eslint ./src",
+    "patch": "npm version patch -m \"bump v%s !\"",
+    "minor": "npm version minor -m \"bump v%s !!\"",
+    "major": "npm version major -m \"bump v%s !!!\""
+  },
+  "files": [
+    "src",
+    "README.md",
+    "package.json"
+  ],
+  "dependencies": {
+    "clone-deep": "^0.1.1",
+    "rx-lite": "^2.5.2"
+  },
+  "devDependencies": {
+    "babel-core": "^5.3.1",
+    "babel-eslint": "^3.1.1",
+    "babel-plugin-espower": "^0.3.0",
+    "babelify": "^6.1.0",
+    "browser-sync": "^2.3.1",
+    "browserify": "^9.0.3",
+    "eslint": "^0.17.1",
+    "karma": "^0.12.31",
+    "karma-browserify": "^4.0.0",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-cli": "0.0.4",
+    "karma-mocha": "^0.1.10",
+    "mocha": "^2.2.1",
+    "power-assert": "^0.11.0",
+    "watchify": "^2.4.0"
+  }
+}
