@@ -1,4 +1,6 @@
 dependencies:
+  cache_directories:
+    - "node_modules"
   pre:
     - npm install
 
