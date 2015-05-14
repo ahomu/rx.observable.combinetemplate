@@ -2,7 +2,7 @@
 
 [![npm version][npm-image]][npm-url] [![build status][circle-image]][circle-url] [![Dependency Status][deps-image]][deps-url]
 
-Generate values  based on the Observable and object template. Similar to `Bacon.combineTemplate` ([link](https://github.com/baconjs/bacon.js#observable-combine)).
+Generate values  based on the Observable and object template. Similar to [`Bacon.combineTemplate`](https://github.com/baconjs/bacon.js#observable-combine).
 
 ## Usage
 
