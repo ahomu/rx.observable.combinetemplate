@@ -125,7 +125,7 @@ function collectTargetObservablesAndContext(templateObject) {
    * @param {Array<Array<number>>} parentContext like [0, 3, 2...]
    */
   function walker(values, parentContext) {
-    values.forEach((value, i)=> {
+    values.forEach(function(value, i) {
       var context = parentContext.slice();
       context.push(i);
 
