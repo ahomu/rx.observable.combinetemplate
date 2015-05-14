@@ -1,6 +1,6 @@
 {
   "name": "rx.observable.combinetemplate",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Generate values  based on the Observable and object template. Similar to `Bacon.combineTemplate`",
   "author": "ahomu",
   "main": "src/index.js",
@@ -22,7 +22,6 @@
     "type": "git",
     "url": "https://github.com/ahomu/rx.observable.combinetemplate"
   },
-  "author": "ahomu",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ahomu/rx.observable.combinetemplate/issues"
