@@ -90,4 +90,34 @@ describe('rx.observable.combineTemplate', ()=> {
     subject2.onNext('bar');
     subject3.onNext('qux');
   });
+
+  it('twice', (done) => {
+    let subject1 = new Rx.Subject();
+    let subject2 = new Rx.Subject();
+
+    let observable = combineTemplate({
+      test : ['foo', subject1, 'baz'],
+      qux  : subject2
+    });
+
+    observable.subscribe((v) => {
+      if (v != null && v.qux === 'FOO') {
+        assert(v.test[0] === 'foo');
+        assert(v.test[1] === 'BAR');
+        assert(v.test[2] === 'baz');
+        assert(v.qux === 'FOO');
+        subject2.onNext('END');
+      }
+      if (v != null && v.qux === 'END') {
+        assert(v.test[0] === 'foo');
+        assert(v.test[1] === 'BAR');
+        assert(v.test[2] === 'baz');
+        assert(v.qux === 'END');
+        done();
+      }
+    });
+
+    subject1.onNext('BAR');
+    subject2.onNext('FOO');
+  });
 });
