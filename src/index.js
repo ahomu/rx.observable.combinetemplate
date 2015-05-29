@@ -72,19 +72,10 @@ function createCombineObserver(targetContexts, baseObject) {
 
       // Continuous updating references to the one before the end of the `targetContext`
       while (targetContext.length > 1) {
-        if (Array.isArray(target)) {
-          target = target[targetContext.shift()];
-        } else {
-          target = target[Object.keys(target)[targetContext.shift()]];
-        }
+        target = target[targetContext.shift()];
       }
 
-      // Assign a new value
-      if (Array.isArray(target)) {
-        target[targetContext.shift()] = newChangedArg;
-      } else {
-        target[Object.keys(target)[targetContext.shift()]] = newChangedArg;
-      }
+      target[targetContext.shift()] = newChangedArg;
     });
 
     prevValues = newValues.slice();
@@ -105,64 +96,57 @@ function collectTargetObservablesAndContext(templateObject) {
   /**
    *
    * ```
-   *   // context index sample
+   *   // context index sample (`x` == Observable)
    *   {
-   *     foo: 'a', // => [0]
+   *     foo: x, // => ['foo']
    *     bar: {
-   *       foo: 'a', // => [1, 0]
-   *       bar: 'b'  // => [1, 1]
+   *       foo: x, // => ['bar', 'foo']
+   *       bar: [_, _, x]  // => ['bar', 'bar', 2]
    *     },
-   *     baz: 'b', // => [2]
+   *     baz: [_, x, _], // => ['baz', 1]
    *     qux: {
    *       foo: {
-   *         foo: 'a' // => [3, 0, 0]
+   *         foo: x // => ['qux', 'foo', 'foo']
    *       }
    *     }
    *   }
    * ```
    *
-   * @param {Array<*>} values
-   * @param {Array<Array<number>>} parentContext like [0, 3, 2...]
+   * @param {Array<*>|Object<*>} list
+   * @param {Array<Array<number|string>>} parentContext like [0, 3, 2...]
    */
-  function walker(values, parentContext) {
-    values.forEach(function(value, i) {
+  function walker(list, parentContext) {
+
+    if (Array.isArray(list)) {
+      list.forEach(evaluator);
+    } else {
+      Object.keys(list).forEach(function(key) {
+        evaluator(list[key], key);
+      });
+    }
+
+    function evaluator(value, key) {
       var context = parentContext.slice();
-      context.push(i);
+      context.push(key);
 
       // isObservable(?)
       if (value.isDisposed != null && value.isStopped != null) {
         targets.push(value);
         contexts.push(context);
 
-        // isArray
-      } else if (Array.isArray(value)) {
+        // isArray || isObject
+      } else if (Array.isArray(value) || (typeof value === 'object' && !!value)) {
         walker(value, context);
-
-        // isObject
-      } else if (typeof value === 'object' && !!value) {
-        walker(extractValuesFromObject(value), context);
       }
-    });
+    }
   }
 
-  walker(extractValuesFromObject(templateObject), []);
+  walker(templateObject, []);
 
   return {
     targets  : targets,
     contexts : contexts
   };
-}
-
-/**
- * Extract the object values as an array.
- *
- * @param {Object} object
- * @returns {Array<*>}
- */
-function extractValuesFromObject(object) {
-  return Object.keys(object).map(function(key) {
-    return object[key];
-  });
 }
 
 module.exports = combineTemplate;
