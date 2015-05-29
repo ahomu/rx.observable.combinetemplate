@@ -36,6 +36,7 @@
     "babel-eslint": "^3.1.1",
     "babel-plugin-espower": "^0.4.1",
     "babelify": "^6.1.0",
+    "benchmark": "^1.0.0",
     "browserify": "^9.0.3",
     "eslint": "^0.17.1",
     "karma": "^0.12.31",
