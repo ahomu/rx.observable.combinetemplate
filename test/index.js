@@ -11,6 +11,14 @@ describe('rx.observable.combineTemplate', ()=> {
     observable.subscribe(() => {});
   });
 
+  it('falsy value', () => {
+    let observable = combineTemplate({
+      foo : null,
+      bar : undefined
+    });
+    observable.subscribe(() => {});
+  });
+
   it('object', (done) => {
     let subject = new Rx.Subject();
     let observable = combineTemplate({

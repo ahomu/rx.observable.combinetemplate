@@ -130,12 +130,12 @@ function collectTargetObservablesAndContext(templateObject) {
       context.push(key);
 
       // isObservable(?)
-      if (value.isDisposed != null && value.isStopped != null) {
+      if (!!value && value.isDisposed != null && value.isStopped != null) {
         targets.push(value);
         contexts.push(context);
 
         // isArray || isObject
-      } else if (Array.isArray(value) || (typeof value === 'object' && !!value)) {
+      } else if (Array.isArray(value) || (!!value && typeof value === 'object')) {
         walker(value, context);
       }
     }
