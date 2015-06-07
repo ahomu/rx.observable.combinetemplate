@@ -5,11 +5,11 @@ module.exports = function(config) {
     frameworks : ['browserify', 'mocha'],
 
     files : [
-      'test/index.js'
+      'test.js'
     ],
 
     preprocessors : {
-      'test/index.js' : 'browserify'
+      'test.js' : 'browserify'
     },
 
     browserify : {

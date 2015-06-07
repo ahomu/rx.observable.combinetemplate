@@ -1,7 +1,7 @@
 'use strict';
 
 import assert from 'power-assert';
-import combineTemplate from '../src/index';
+import combineTemplate from './';
 import Rx from 'rx-lite';
 
 describe('rx.observable.combineTemplate', ()=> {
