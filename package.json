@@ -14,7 +14,7 @@
     "major": "npm version major -m \"bump v%s !!!\""
   },
   "files": [
-    "src",
+    "index.js",
     "README.md",
     "package.json"
   ],
