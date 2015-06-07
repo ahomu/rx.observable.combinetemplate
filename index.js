@@ -129,8 +129,8 @@ function collectTargetObservablesAndContext(templateObject) {
       var context = parentContext.slice();
       context.push(key);
 
-      // isObservable(?)
-      if (!!value && value.isDisposed != null && value.isStopped != null) {
+      // isObservable
+      if (value instanceof Rx.Observable) {
         targets.push(value);
         contexts.push(context);
 
