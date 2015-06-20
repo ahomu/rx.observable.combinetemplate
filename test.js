@@ -7,26 +7,26 @@ import Rx from 'rx-lite';
 describe('rx.observable.combineTemplate', ()=> {
 
   it('empty', () => {
-    let observable = combineTemplate({});
-    observable.subscribe(() => {});
+    let combined = combineTemplate({});
+    combined.subscribe(() => {});
   });
 
   it('falsy value', () => {
-    let observable = combineTemplate({
+    let combined = combineTemplate({
       foo : null,
       bar : undefined
     });
-    observable.subscribe(() => {});
+    combined.subscribe(() => {});
   });
 
   it('object', (done) => {
     let subject = new Rx.Subject();
-    let observable = combineTemplate({
+    let combined = combineTemplate({
       foo  : 'bar',
       test : subject
     });
 
-    observable.subscribe((v) => {
+    combined.subscribe((v) => {
       if (v.test != null) {
         assert(v.foo === 'bar');
         assert(v.test === 'baz');
@@ -39,15 +39,15 @@ describe('rx.observable.combineTemplate', ()=> {
 
   it('array', (done) => {
     let subject1 = new Rx.Subject();
+    let observable = new Rx.Observable.just('bar');
     let subject2 = new Rx.Subject();
-    let subject3 = new Rx.Subject();
 
-    let observable = combineTemplate({
-      test : [subject1, subject2, subject3],
+    let combined = combineTemplate({
+      test : [subject1, observable, subject2],
       qux  : 'c⌒っ.ω.)っ'
     });
 
-    observable.subscribe((v) => {
+    combined.subscribe((v) => {
       if (v != null) {
         assert(v.test[0] === 'foo');
         assert(v.test[1] === 'bar');
@@ -58,16 +58,15 @@ describe('rx.observable.combineTemplate', ()=> {
     });
 
     subject1.onNext('foo');
-    subject2.onNext('bar');
-    subject3.onNext('baz');
+    subject2.onNext('baz');
   });
 
   it('nested', (done) => {
     let subject1 = new Rx.Subject();
+    let observable = new Rx.Observable.just('bar');
     let subject2 = new Rx.Subject();
-    let subject3 = new Rx.Subject();
 
-    let observable = combineTemplate({
+    let combined = combineTemplate({
       foo : 'bar',
       baz : {
         foo : {
@@ -76,12 +75,12 @@ describe('rx.observable.combineTemplate', ()=> {
         bar : 'baz'
       },
       qux : {
-        foo : [1, subject2, 3],
-        baz : subject3
+        foo : [1, observable, 3],
+        baz : subject2
       }
     });
 
-    observable.subscribe((v) => {
+    combined.subscribe((v) => {
       if (v != null) {
         assert(v.foo === 'bar');
         assert(v.baz.foo.foo === 'foo');
@@ -95,37 +94,35 @@ describe('rx.observable.combineTemplate', ()=> {
     });
 
     subject1.onNext('foo');
-    subject2.onNext('bar');
-    subject3.onNext('qux');
+    subject2.onNext('qux');
   });
 
   it('twice', (done) => {
-    let subject1 = new Rx.Subject();
-    let subject2 = new Rx.Subject();
+    let subject = new Rx.Subject();
+    let observable = new Rx.Observable.just('FOO');
 
-    let observable = combineTemplate({
-      test : ['foo', subject1, 'baz'],
-      qux  : subject2
+    let combined = combineTemplate({
+      test : ['foo', subject, 'baz'],
+      qux  : observable
     });
 
-    observable.subscribe((v) => {
-      if (v != null && v.qux === 'FOO') {
+    combined.subscribe((v) => {
+      if (v != null && v.test[1] === 'BAR') {
         assert(v.test[0] === 'foo');
         assert(v.test[1] === 'BAR');
         assert(v.test[2] === 'baz');
         assert(v.qux === 'FOO');
-        subject2.onNext('END');
+        subject.onNext('END');
       }
-      if (v != null && v.qux === 'END') {
+      if (v != null && v.test[1] === 'END') {
         assert(v.test[0] === 'foo');
-        assert(v.test[1] === 'BAR');
+        assert(v.test[1] === 'END');
         assert(v.test[2] === 'baz');
-        assert(v.qux === 'END');
+        assert(v.qux === 'FOO');
         done();
       }
     });
 
-    subject1.onNext('BAR');
-    subject2.onNext('FOO');
+    subject.onNext('BAR');
   });
 });

@@ -130,7 +130,7 @@ function collectTargetObservablesAndContext(templateObject) {
       context.push(key);
 
       // maybe isObservable
-      if (value != null && value.isDisposed != null && value.isStopped != null) {
+      if (value != null && value.subscribe != null && value.publish != null) {
         targets.push(value);
         contexts.push(context);
 
